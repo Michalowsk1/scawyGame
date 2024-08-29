@@ -28,7 +28,7 @@ public class FirstPersonMovement : MonoBehaviour
         RenderSettings.fogDensity = 0.05f;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // Update IsRunning from input.
         IsRunning = canRun && Input.GetKey(runningKey);

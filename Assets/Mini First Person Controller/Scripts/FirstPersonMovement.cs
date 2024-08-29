@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class FirstPersonMovement : MonoBehaviour
 {
     public float speed = 6;
 
-    bool bag = false;
-    bool glasses = false;
-    bool pills = false;
+    int count = 0;
 
     [Header("Running")]
     public bool canRun = true;
@@ -26,6 +25,7 @@ public class FirstPersonMovement : MonoBehaviour
     {
         // Get the rigidbody on this.
         rigidbody = GetComponent<Rigidbody>();
+        RenderSettings.fogDensity = 0.05f;
     }
 
     void FixedUpdate()
@@ -45,32 +45,36 @@ public class FirstPersonMovement : MonoBehaviour
 
         // Apply movement.
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
-
-        if (bag == true)
-        { speed = 5.5f; runSpeed = 9; }
-
-        else
-        { speed = 6; runSpeed = 10; }
-
-        if (glasses == true)
-        { RenderSettings.fogDensity = 0.125f; speed -= 1; runSpeed -= 2; }
-
-        else
-        { RenderSettings.fogDensity = 0.075f;}
     }
 
         void OnCollisionEnter(Collision equip)
         {
-            if (equip.gameObject.tag == ("bag"))
+            if (equip.gameObject.tag == ("collectable"))
             {
-                bag = true;
-                Destroy(equip.gameObject);
+            count++;
+            speed -= 0.5f; runSpeed -= 1;
+            Destroy(equip.gameObject);
             }
 
-            if (equip.gameObject.tag == ("glasses"))
+            if (equip.gameObject.tag == ("fogCollectable"))
             {
-                glasses = true;
-                Destroy(equip.gameObject);
+            count++;
+            RenderSettings.fogDensity += 0.05f;
+            speed -= 0.5f; runSpeed -= 1;
+            Destroy(equip.gameObject);
+            }
+
+            if (equip.gameObject.tag == ("energy"))
+            {
+             speed += 0.25f; runSpeed += 0.5f;
+             Destroy(equip.gameObject);
+            }
+
+            if (equip.gameObject.tag == ("eyesight"))
+            {
+             RenderSettings.fogDensity -= 0.05f;
+             speed += 0.25f; runSpeed += 0.5f;
+             Destroy(equip.gameObject);
             }
     }
     }

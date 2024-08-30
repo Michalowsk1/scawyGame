@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FirstPersonMovement : MonoBehaviour
@@ -8,6 +9,10 @@ public class FirstPersonMovement : MonoBehaviour
     public float speed = 6;
 
     int count = 0;
+    [Header("myStuff")]
+    [SerializeField] GameObject paperNote;
+    [SerializeField] GameObject pickupText;
+    [SerializeField] GameObject message;
 
     [Header("Running")]
     public bool canRun = true;
@@ -26,6 +31,8 @@ public class FirstPersonMovement : MonoBehaviour
         // Get the rigidbody on this.
         rigidbody = GetComponent<Rigidbody>();
         RenderSettings.fogDensity = 0.05f;
+        paperNote.SetActive(true);
+        pickupText.SetActive(false);
     }
 
     void Update()
@@ -45,10 +52,17 @@ public class FirstPersonMovement : MonoBehaviour
 
         // Apply movement.
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
+
+        if (Input.GetKey(KeyCode.X))
+        {
+            message.SetActive(false);
+        }
     }
 
-        void OnCollisionEnter(Collision equip)
-        {
+    
+
+    void OnCollisionEnter(Collision equip)
+    {
             if (equip.gameObject.tag == ("collectable"))
             {
             count++;
@@ -76,5 +90,39 @@ public class FirstPersonMovement : MonoBehaviour
              speed += 0.25f; runSpeed += 0.5f;
              Destroy(equip.gameObject);
             }
+
+            if (equip.gameObject.tag == "paperNote")
+            {
+                pickupText.SetActive(true);
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    paperNote.SetActive(false);
+                }
+            }
+            else
+            {
+                pickupText.SetActive(false);
+            }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "paperNote")
+        {
+            pickupText.SetActive(true);
+
+            if (Input.GetKey(KeyCode.E))
+            {
+
+                paperNote.SetActive(false);
+                message.SetActive(true);
+            }
+        }
     }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        pickupText.SetActive(false);
+    }
+}

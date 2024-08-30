@@ -8,6 +8,7 @@ TagManager:
   - energy
   - eyesight
   - fogCollectable
+  - paperNote
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - player
   - 
   - 
   - 

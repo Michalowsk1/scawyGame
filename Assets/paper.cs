@@ -6,6 +6,7 @@ public class paper : MonoBehaviour
 {
     [SerializeField]GameObject paperNote;
     [SerializeField] GameObject pickupText;
+    [SerializeField] GameObject message;
     // Start is called before the first frame update
     void Start()
     {

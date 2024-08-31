@@ -8,7 +8,6 @@ public class enemyAI : MonoBehaviour
 
     [SerializeField] NavMeshAgent creature;
     [SerializeField] Transform player;
-    [SerializeField] GameObject tree;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +21,5 @@ public class enemyAI : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "destructable")
-        {
-            Destroy(tree);
-        }
-    }
+    
 }

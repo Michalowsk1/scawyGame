@@ -9,6 +9,7 @@ TagManager:
   - eyesight
   - fogCollectable
   - paperNote
+  - enemy
   layers:
   - Default
   - TransparentFX

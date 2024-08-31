@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class FirstPersonMovement : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class FirstPersonMovement : MonoBehaviour
     [SerializeField] GameObject paperNote;
     [SerializeField] GameObject pickupText;
     [SerializeField] GameObject message;
+    [SerializeField] TMP_Text items; 
+    
 
     [Header("Running")]
     public bool canRun = true;
@@ -57,6 +61,13 @@ public class FirstPersonMovement : MonoBehaviour
         {
             message.SetActive(false);
         }
+
+        items.text = "Items collected : " + count.ToString() + "/6";
+
+        if (count == 6)
+        {
+            SceneManager.LoadScene("youWin");
+        }
     }
 
     
@@ -80,12 +91,14 @@ public class FirstPersonMovement : MonoBehaviour
 
             if (equip.gameObject.tag == ("energy"))
             {
+            count++;
              speed += 0.25f; runSpeed += 0.5f;
              Destroy(equip.gameObject);
             }
 
             if (equip.gameObject.tag == ("eyesight"))
             {
+            count++;
              RenderSettings.fogDensity -= 0.05f;
              speed += 0.25f; runSpeed += 0.5f;
              Destroy(equip.gameObject);
@@ -103,6 +116,11 @@ public class FirstPersonMovement : MonoBehaviour
             else
             {
                 pickupText.SetActive(false);
+            }
+
+            if(equip.gameObject.tag == ("enemy"))
+            {
+            SceneManager.LoadScene("gameOver");
             }
     }
     private void OnTriggerEnter(Collider other)

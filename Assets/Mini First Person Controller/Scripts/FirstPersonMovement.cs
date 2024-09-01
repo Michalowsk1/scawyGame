@@ -9,17 +9,20 @@ using UnityEngine.SceneManagement;
 public class FirstPersonMovement : MonoBehaviour
 {
     public float speed = 6;
+    bool jumpscare;
 
     int count = 0;
     [Header("myStuff")]
+    [SerializeField] GameObject scaryImage;
     [SerializeField] GameObject paperNote;
     [SerializeField] GameObject pickupText;
     [SerializeField] GameObject message;
-    [SerializeField] TMP_Text items; 
-    
+    [SerializeField] TMP_Text items;
+
 
     [Header("Running")]
     public bool canRun = true;
+    public float time;
     public bool IsRunning { get; private set; }
     public float runSpeed = 11;
     public KeyCode runningKey = KeyCode.LeftShift;
@@ -37,6 +40,7 @@ public class FirstPersonMovement : MonoBehaviour
         RenderSettings.fogDensity = 0.05f;
         paperNote.SetActive(true);
         pickupText.SetActive(false);
+        scaryImage.SetActive(false);
     }
 
     void Update()
@@ -66,62 +70,57 @@ public class FirstPersonMovement : MonoBehaviour
 
         if (count == 6)
         {
-            SceneManager.LoadScene("youWin");
+            SceneManager.LoadScene("Victory");
         }
     }
 
-    
+
 
     void OnCollisionEnter(Collision equip)
     {
-            if (equip.gameObject.tag == ("collectable"))
-            {
+        if (equip.gameObject.tag == ("collectable"))
+        {
             count++;
             speed -= 0.5f; runSpeed -= 1;
             Destroy(equip.gameObject);
-            }
+        }
 
-            if (equip.gameObject.tag == ("fogCollectable"))
-            {
+        if (equip.gameObject.tag == ("fogCollectable"))
+        {
             count++;
             RenderSettings.fogDensity += 0.05f;
             speed -= 0.5f; runSpeed -= 1;
             Destroy(equip.gameObject);
-            }
+        }
 
-            if (equip.gameObject.tag == ("energy"))
-            {
+        if (equip.gameObject.tag == ("energy"))
+        {
             count++;
-             speed += 0.25f; runSpeed += 0.5f;
-             Destroy(equip.gameObject);
-            }
+            speed += 0.25f; runSpeed += 0.5f;
+            Destroy(equip.gameObject);
+        }
 
-            if (equip.gameObject.tag == ("eyesight"))
-            {
+        if (equip.gameObject.tag == ("eyesight"))
+        {
             count++;
-             RenderSettings.fogDensity -= 0.05f;
-             speed += 0.25f; runSpeed += 0.5f;
-             Destroy(equip.gameObject);
-            }
+            RenderSettings.fogDensity -= 0.05f;
+            speed += 0.25f; runSpeed += 0.5f;
+            Destroy(equip.gameObject);
+        }
 
-            if (equip.gameObject.tag == "paperNote")
-            {
-                pickupText.SetActive(true);
+        if (equip.gameObject.tag == "paperNote")
+        {
+            pickupText.SetActive(true);
 
-                if (Input.GetKey(KeyCode.E))
-                {
-                    paperNote.SetActive(false);
-                }
-            }
-            else
+            if (Input.GetKey(KeyCode.E))
             {
-                pickupText.SetActive(false);
+                paperNote.SetActive(false);
             }
-
-            if(equip.gameObject.tag == ("enemy"))
-            {
-            SceneManager.LoadScene("gameOver");
-            }
+        }
+        else
+        {
+            pickupText.SetActive(false);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

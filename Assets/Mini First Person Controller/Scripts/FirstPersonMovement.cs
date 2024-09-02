@@ -8,12 +8,11 @@ using UnityEngine.SceneManagement;
 
 public class FirstPersonMovement : MonoBehaviour
 {
+    public AudioSource scream;
     public float speed = 6;
-    bool jumpscare;
 
     int count = 0;
     [Header("myStuff")]
-    [SerializeField] GameObject scaryImage;
     [SerializeField] GameObject paperNote;
     [SerializeField] GameObject pickupText;
     [SerializeField] GameObject message;
@@ -22,7 +21,6 @@ public class FirstPersonMovement : MonoBehaviour
 
     [Header("Running")]
     public bool canRun = true;
-    public float time;
     public bool IsRunning { get; private set; }
     public float runSpeed = 11;
     public KeyCode runningKey = KeyCode.LeftShift;
@@ -37,10 +35,10 @@ public class FirstPersonMovement : MonoBehaviour
     {
         // Get the rigidbody on this.
         rigidbody = GetComponent<Rigidbody>();
+
         RenderSettings.fogDensity = 0.05f;
         paperNote.SetActive(true);
         pickupText.SetActive(false);
-        scaryImage.SetActive(false);
     }
 
     void Update()
@@ -108,38 +106,17 @@ public class FirstPersonMovement : MonoBehaviour
             Destroy(equip.gameObject);
         }
 
-        if (equip.gameObject.tag == "paperNote")
+        if (equip.gameObject.tag == ("enemy"))
         {
-            pickupText.SetActive(true);
-
-            if (Input.GetKey(KeyCode.E))
-            {
-                paperNote.SetActive(false);
-            }
-        }
-        else
-        {
-            pickupText.SetActive(false);
+            SceneManager.LoadScene("jumpscare");
         }
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "paperNote")
         {
-            pickupText.SetActive(true);
-
-            if (Input.GetKey(KeyCode.E))
-            {
-
                 paperNote.SetActive(false);
                 message.SetActive(true);
             }
         }
     }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        pickupText.SetActive(false);
-    }
-}

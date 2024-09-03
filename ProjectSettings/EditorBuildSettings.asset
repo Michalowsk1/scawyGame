@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/jumpscare.unity
     guid: eec0b41dd0b00794dbe013a2be259a48
+  - enabled: 1
+    path: Assets/Scenes/mainMenu.unity
+    guid: cdbfa2034c81b7b48be8fb4ab7fe707d
   m_configObjects: {}

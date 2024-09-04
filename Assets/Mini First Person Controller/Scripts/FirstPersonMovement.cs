@@ -93,14 +93,12 @@ public class FirstPersonMovement : MonoBehaviour
 
         if (equip.gameObject.tag == ("energy"))
         {
-            count++;
             speed += 0.25f; runSpeed += 0.5f;
             Destroy(equip.gameObject);
         }
 
         if (equip.gameObject.tag == ("eyesight"))
         {
-            count++;
             RenderSettings.fogDensity -= 0.05f;
             speed += 0.25f; runSpeed += 0.5f;
             Destroy(equip.gameObject);

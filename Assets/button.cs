@@ -24,6 +24,6 @@ public class button : MonoBehaviour
 
     public void playAgainButton()
     {
-        SceneManager.LoadScene("mainMenu");
+        SceneManager.LoadScene("SampleScene");
     }
 }

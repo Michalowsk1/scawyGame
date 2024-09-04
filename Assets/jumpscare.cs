@@ -20,10 +20,10 @@ public class jumpscare : MonoBehaviour
     void Update()
     {
         timer = timer + 1;
-        if (timer >= 100)
+        if (timer >= 300)
         {  
             {
-                SceneManager.LoadScene("gameOver");
+                SceneManager.LoadScene("SampleScene");
             }
         }
     }
